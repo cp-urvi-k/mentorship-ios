@@ -28,6 +28,12 @@ class ProfileViewModel: ObservableObject {
     @Published var updateProfileResponseData = ProfileModel.UpdateProfileResponseData(success: false, message: "")
     @Published var inActivity = false
     @Published var showAlert = false
+    @Published var getProfileData: ProfileModel.ProfileData? = nil
+    var isUpdateProfileData:Bool = false {
+        didSet {
+            getProfileData = getProfile()
+        }
+    }
     var alertTitle = LocalizedStringKey("")
 
     // MARK: - Functions
@@ -38,6 +44,7 @@ class ProfileViewModel: ObservableObject {
             return
         }
         UserDefaults.standard.set(profileData, forKey: UserDefaultsConstants.profile)
+        isUpdateProfileData = true
     }
 
     //gets profile object from user defaults
